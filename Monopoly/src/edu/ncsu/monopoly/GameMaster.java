@@ -7,6 +7,7 @@ import java.util.Iterator;
 public class GameMaster {
 //comentario para probar git
 //funciona correctamente el git. Prueba 3
+	// prueba 3 va
 	private static GameMaster gameMaster;
 	static final public int MAX_PLAYER = 8;	
 	private Die[] dice;
