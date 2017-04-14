@@ -1,6 +1,7 @@
 package edu.ncsu.monopoly.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +15,6 @@ import javax.swing.OverlayLayout;
 import javax.swing.border.BevelBorder;
 
 import edu.ncsu.monopoly.*;
-import edu.ncsu.monopoly.Card;
-import edu.ncsu.monopoly.GameMaster;
-import edu.ncsu.monopoly.Player;
 
 public class PlayerPanel extends JPanel {
 
@@ -53,6 +51,10 @@ public class PlayerPanel extends JPanel {
         txtProperty.setEnabled(false);
 
         JPanel pnlName = new JPanel();
+        Perfil p=new Perfil();
+        p.setNombreDeUsuario(player.getName());
+        Color c= definirColorFicha(ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().indexOf(p));
+        pnlName.setBackground(c);
         JPanel pnlProperties = new JPanel();
 
         pnlInfo.setLayout(new BorderLayout());
@@ -206,4 +208,20 @@ public class PlayerPanel extends JPanel {
     public void setTradeEnabled(boolean b) {
         btnTrade.setEnabled(b);
     }
+    private Color definirColorFicha(int indice){
+ 	   String color = ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().get(indice).getColorFicha();
+ 	
+ 	   
+ 	   if (color.equals("Blanco")) return Color.WHITE;
+ 	   if (color.equals("Rojo")) return Color.RED;
+ 	   if (color.equals("Verde")) return Color.GREEN;
+ 	   if (color.equals("Amarillo")) return Color.YELLOW;
+ 	   if (color.equals("Azul")) return Color.BLUE;
+ 	   if (color.equals("Negro")) return Color.BLACK;
+ 	   if (color.equals("Violeta")) return Color.MAGENTA;
+ 	   if (color.equals("Naranja")) return Color.ORANGE;
+ 	   return Color.GREEN;
+ 	   
+ 	   
+    }  
 }

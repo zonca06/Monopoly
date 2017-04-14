@@ -45,13 +45,35 @@ public class GUICell extends JPanel {
     private void createPlayerLabels(JPanel pnlPlayer) {
 		for (int i = 0; i < GameMaster.MAX_PLAYER; i++) {
 			lblPlayers[i] = new JLabel();
-			lblPlayers[i].setBackground(Color.GREEN);
+			if(i<ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().size()){
+			lblPlayers[i].setBackground(definirColorFicha(i));
+            pnlPlayer.doLayout();
+			}
 			pnlPlayer.add(lblPlayers[i]);
 		}
+		
 	}
+    
+   private Color definirColorFicha(int indice){
+	   String color = ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().get(indice).getColorFicha();
+	
+	   
+	   if (color.equals("Blanco")) return Color.WHITE;
+	   if (color.equals("Rojo")) return Color.RED;
+	   if (color.equals("Verde")) return Color.GREEN;
+	   if (color.equals("Amarillo")) return Color.YELLOW;
+	   if (color.equals("Azul")) return Color.BLUE;
+	   if (color.equals("Negro")) return Color.BLACK;
+	   if (color.equals("Violeta")) return Color.MAGENTA;
+	   if (color.equals("Naranja")) return Color.ORANGE;
+	   return Color.GREEN;
+	   
+	   
+   }  
 
 	public void displayInfo() {
 		lblInfo.setText(InfoFormatter.cellInfo(cell));
+		lblInfo.setToolTipText(InfoFormatter.cellInfo(cell));
         this.invalidate();
 		this.repaint();
 	}
