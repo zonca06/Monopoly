@@ -2,7 +2,7 @@ package edu.ncsu.monopoly;
 
 import javax.swing.ImageIcon;
 
-public class Perfil {
+public class Perfil implements java.io.Serializable {
 // necesitamos seleccionar el color
 	//subir una foto
 	//nombre
@@ -12,8 +12,8 @@ public class Perfil {
 	private String nombreDeUsuario;
 	private String contraseña;
 	private String colorFicha;
-	int partidosJugados;	
-	int partidosGanados;
+	int partidosJugados=0;	
+	int partidosGanados=0;
 	ImageIcon imagen;
 	
 		
@@ -60,8 +60,9 @@ public class Perfil {
 		
 	}
 	public String toString(){
-		return this.getNombreDeUsuario(); 	
-		}
+		
+		return this.getNombreDeUsuario()+ " - PJ: "+this.getPartidosJugados()+ " - PG: "+ this.getPartidosGanados(); 	
+	}
 
 
 }

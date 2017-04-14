@@ -9,6 +9,7 @@ import edu.ncsu.monopoly.GameBoard;
 import edu.ncsu.monopoly.GameMaster;
 import edu.ncsu.monopoly.ManejadorComienzoPartida;
 import edu.ncsu.monopoly.Perfil;
+import edu.ncsu.monopoly.Serializar;
 import edu.ncsu.monopoly.test.boardScenarios.GameBoardFull;
 
 import java.awt.Rectangle;
@@ -64,12 +65,28 @@ public class SeleccionDePerfil extends JFrame {
 		lblSeleccionDeUsuario.setBounds(new Rectangle(14, 16, 142, 16));
 		contentPane.add(lblSeleccionDeUsuario);
 		
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.setBounds(459, 37, 142, 119);
+		contentPane.add(scrollPane_1);
+		
 		final JList lbUsuariosPartida = new JList();
-		lbUsuariosPartida.setBounds(new Rectangle(12, 36, 140, 140));
-		lbUsuariosPartida.setBounds(459, 43, 140, 113);
-		contentPane.add(lbUsuariosPartida);
+		scrollPane_1.setViewportView(lbUsuariosPartida);
+		
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		
+		scrollPane.setBounds(14, 37, 143, 119);
+		contentPane.add(scrollPane);
 		
 		final JList lbUsuarios = new JList();
+		scrollPane.setViewportView(lbUsuarios);
+		lbUsuarios.setListData(ManejadorComienzoPartida.instance().getListaDePerfilesNoSeleccionados().toArray());
 		lbUsuarios.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent arg0) {
 				try{
@@ -82,8 +99,7 @@ public class SeleccionDePerfil extends JFrame {
 				}
 			}
 		});
-		lbUsuarios.setBounds(new Rectangle(12, 36, 144, 120));
-		contentPane.add(lbUsuarios);
+		//contentPane.add(lbUsuarios);
 		
 		final JComboBox cbColor = new JComboBox();
 		cbColor.setEditable(true);
@@ -99,6 +115,9 @@ public class SeleccionDePerfil extends JFrame {
 		JButton btnAgregarAPartida = new JButton();
 		btnAgregarAPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {		
+				if(ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().size()<8){
+					
+					
 				
 				Perfil p =(Perfil) lbUsuarios.getSelectedValue();
 				
@@ -114,6 +133,9 @@ public class SeleccionDePerfil extends JFrame {
 				lbUsuariosPartida.setListData(ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().toArray());
 			    }else{
 					JOptionPane.showMessageDialog(getParent(), "Seleccione un usuario" );
+				}
+				}else{
+					JOptionPane.showMessageDialog(getParent(), "La partida tiene un máximo de 8 jugadores" );
 				}
 		}
 		});
@@ -190,6 +212,7 @@ public class SeleccionDePerfil extends JFrame {
 					if (salida==false){
 						ManejadorComienzoPartida.instance().getListaDePerfilesNoSeleccionados().add(p);
 						ManejadorComienzoPartida.instance().getListaDePerfilesPersistidos().add(p);
+						Serializar.instance().guardar();
 						lbUsuarios.removeAll();
 						lbUsuarios.setListData(ManejadorComienzoPartida.instance().getListaDePerfilesNoSeleccionados().toArray());
 						tbNombre.setText(null);
@@ -293,6 +316,7 @@ public class SeleccionDePerfil extends JFrame {
 				if (p!=null){
 				ManejadorComienzoPartida.instance().getListaDePerfilesNoSeleccionados().remove(p);
 				ManejadorComienzoPartida.instance().getListaDePerfilesPersistidos().remove(p);
+				Serializar.instance().guardar();
 				lbUsuarios.setListData(ManejadorComienzoPartida.instance().getListaDePerfilesNoSeleccionados().toArray());
 				}else{
 					
@@ -347,6 +371,10 @@ public class SeleccionDePerfil extends JFrame {
 		
 		
 		
+		
+		
+		
+		
 	}
 	
 // Methode to resize imageIcon with the same size of a Jlabel
@@ -359,5 +387,4 @@ public ImageIcon ResizeImage(String ImagePath, JLabel l)
     return image;
   
 }
-	
 }

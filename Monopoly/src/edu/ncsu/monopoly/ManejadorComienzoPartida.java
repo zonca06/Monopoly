@@ -2,7 +2,7 @@ package edu.ncsu.monopoly;
 
 import java.util.ArrayList;
 
-public class ManejadorComienzoPartida {
+public class ManejadorComienzoPartida implements java.io.Serializable {
 	private static  ManejadorComienzoPartida manPerf;
 	private ArrayList<Perfil> listaDePerfilesNoSeleccionados;
 	private ArrayList<Perfil> listaDePerfilesPersistidos;
@@ -38,8 +38,15 @@ public class ManejadorComienzoPartida {
 
 	private ManejadorComienzoPartida() {		
 		// cuando se haga la persistencia la lista de no seleccionados se
-		//debera cargar con la de persistidos        this.listaDePerfilesNoSeleccionados = new ArrayList<Perfil>() ;
+		//debera cargar con la de persistidos
+        this.listaDePerfilesNoSeleccionados = new ArrayList<Perfil>() ;
         this.listaDePerfilesPersistidos = new ArrayList<Perfil>() ;
+		this.listaDePerfilesPersistidos=Serializar.instance().obtenerUsuarios();
+		
+		for (int i = 0; i < listaDePerfilesPersistidos.size(); i++) {
+			listaDePerfilesNoSeleccionados.add(listaDePerfilesPersistidos.get(i));
+		}
+		
         this.listaDePerfilesSeleccionados = new ArrayList<Perfil>() ;
 	}
 	
