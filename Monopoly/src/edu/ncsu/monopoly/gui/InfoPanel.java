@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import edu.ncsu.monopoly.GameMaster;
 
 public class InfoPanel extends JPanel {
+	public InfoPanel() {
+	}
 	public void displayInfo() {
 		GameMaster master = GameMaster.instance();
 		setLayout(new GridLayout(1, master.getNumberOfPlayers()));
