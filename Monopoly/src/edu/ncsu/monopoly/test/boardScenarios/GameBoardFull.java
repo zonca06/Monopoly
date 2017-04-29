@@ -11,6 +11,7 @@ import edu.ncsu.monopoly.MoneyCard;
 import edu.ncsu.monopoly.MovePlayerCard;
 import edu.ncsu.monopoly.PropertyCell;
 import edu.ncsu.monopoly.RailRoadCell;
+import edu.ncsu.monopoly.TaxiCard;
 import edu.ncsu.monopoly.UtilityCell;
 
 public class GameBoardFull extends GameBoard {
@@ -254,7 +255,10 @@ public class GameBoardFull extends GameBoard {
         addCell(db2);
         addCell(db3);
         
-        addCard(new MoneyCard("Win $50", 50, Card.TYPE_CC));
+        // comento esto para probar la carta taxi, al comentarlo solo sale la carta taxi
+        
+        
+        /*addCard(new MoneyCard("Win $50", 50, Card.TYPE_CC));
         addCard(new MoneyCard("Win $20", 20, Card.TYPE_CC));
         addCard(new MoneyCard("Win $10", 10, Card.TYPE_CC));
         addCard(new MoneyCard("Lose $100", -100, Card.TYPE_CC));
@@ -269,6 +273,11 @@ public class GameBoardFull extends GameBoard {
         addCard(new MoneyCard("Lose $100", -100, Card.TYPE_CHANCE));
         addCard(new MoneyCard("Lose $50", -50, Card.TYPE_CHANCE));
         addCard(new JailCard(Card.TYPE_CHANCE));
-        addCard(new MovePlayerCard("Illinois Avenue", Card.TYPE_CHANCE));
+        addCard(new MovePlayerCard("Illinois Avenue", Card.TYPE_CHANCE));*/
+        
+        
+        addCard(new TaxiCard(0, Card.TYPE_CHANCE));
+        addCard(new TaxiCard(0, Card.TYPE_CC));
+        
     }
 }

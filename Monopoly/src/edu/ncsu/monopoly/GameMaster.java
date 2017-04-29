@@ -3,6 +3,8 @@ package edu.ncsu.monopoly;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JOptionPane;
+
 
 public class GameMaster {
 //comentario para probar git
@@ -34,17 +36,54 @@ public class GameMaster {
     public void btnBuyHouseClicked() {
         gui.showBuyHouseDialog(getCurrentPlayer());
     }
-
+public int solicitarNumero(){
+	String errorMessage = "";
+	int number=0;
+	do {
+	    
+		String stringInput =JOptionPane.showInputDialog(null, errorMessage +"¿Cuantas posiciones desea moverse? (número entre 1 y 6)" ,"Sacó la carta taxi!!", JOptionPane.QUESTION_MESSAGE); 
+	    try {
+	        number = Integer.parseInt(stringInput);
+	        if (number > 6 || number < 0) {
+	            errorMessage = "El número debe ser entre 1 y 6\n";
+	        } else {
+	           
+	            errorMessage = ""; // no hay mas errores
+	        }
+	    } catch (NumberFormatException e) {
+	     
+	        errorMessage = "Solo se puede ingresar números\n";
+	    }catch (Exception e) {
+	      
+	        errorMessage = "Verifique los datos";
+	    }
+	} while (!errorMessage.isEmpty());
+	
+	return number;
+	
+}
     public Card btnDrawCardClicked() {
         gui.setDrawCardEnabled(false);
         CardCell cell = (CardCell)getCurrentPlayer().getPosition();
         Card card = null;
         if(cell.getType() == Card.TYPE_CC) {
             card = getGameBoard().drawCCCard();
+            if(card instanceof TaxiCard){
+             TaxiCard ct=(TaxiCard) card;
+             ct.setValorSeleccionado(solicitarNumero());
+             ct.applyAction();
+            }else{
             card.applyAction();
+            }
         } else {
             card = getGameBoard().drawChanceCard();
-            card.applyAction();
+            if(card instanceof TaxiCard){
+                TaxiCard ct=(TaxiCard) card;
+                ct.setValorSeleccionado(solicitarNumero());
+                ct.applyAction();
+               }else{
+               card.applyAction();
+               }
         }
         gui.setEndTurnEnabled(true);
         return card;
