@@ -44,7 +44,7 @@ public int solicitarNumero(){
 		String stringInput =JOptionPane.showInputDialog(null, errorMessage +"¿Cuantas posiciones desea moverse? (número entre 1 y 6)" ,"Sacó la carta taxi!!", JOptionPane.QUESTION_MESSAGE); 
 	    try {
 	        number = Integer.parseInt(stringInput);
-	        if (number > 6 || number < 0) {
+	        if (number > 6 || number < 1) {
 	            errorMessage = "El número debe ser entre 1 y 6\n";
 	        } else {
 	           

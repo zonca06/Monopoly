@@ -161,7 +161,7 @@ public class SeleccionDePerfil extends JFrame {
 		          file.setCurrentDirectory(new File(System.getProperty("user.home")));
 		          //filter the files
 		          FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg","gif","png");
-		          file.addChoosableFileFilter(filter);
+		          file.setFileFilter(filter);
 		          int result = file.showSaveDialog(null);
 		           //if the user click on save in Jfilechooser
 		          if(result == JFileChooser.APPROVE_OPTION){
@@ -262,7 +262,7 @@ public class SeleccionDePerfil extends JFrame {
 				GameMaster.instance().setNumberOfPlayers(jugadores);
 				
 				for(int i = 0; i < jugadores; i++) {
-					
+					ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().get(i).setPartidosJugados(ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().get(i).getPartidosJugados()+1);
 					GameMaster.instance().getPlayer(i).setName(ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().get(i).getNombreDeUsuario());
 				}
 				window.setupGameBoard(gameBoard);
@@ -274,6 +274,9 @@ public class SeleccionDePerfil extends JFrame {
 					JOptionPane.showMessageDialog(getParent(), "Por lo menos deben haber 2 jugadores para iniciar la partida" );
 					
 				}
+		
+				dispose();
+				Serializar.instance().guardar();
 			}
 		});
 		btnComenzarPartida.setText("Comenzar Partida");
@@ -341,7 +344,7 @@ public class SeleccionDePerfil extends JFrame {
 		          file.setCurrentDirectory(new File(System.getProperty("user.home")));
 		          //filter the files
 		          FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg","gif","png");
-		          file.addChoosableFileFilter(filter);
+		          file.setFileFilter(filter);
 		          int result = file.showSaveDialog(null);
 		           //if the user click on save in Jfilechooser
 		          if(result == JFileChooser.APPROVE_OPTION){
