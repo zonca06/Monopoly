@@ -85,22 +85,47 @@ public int solicitarNumero(){
                card.applyAction();
                }
         }
+        //si quita una carta que le descuenta dinero debo verificar si termina la partida
+        if (getCurrentPlayer().isBankrupt())verificarFin();
         gui.setEndTurnEnabled(true);
         return card;
     }
 
-    public void btnEndTurnClicked() {
+    private void verificarFin() {
+		int jugadoresEnBancaRota=0;
+		int indiceGanador=0;
+    	for(int i=0;i<players.size();i++){
+			if(getPlayer(i).isBankrupt()){
+				jugadoresEnBancaRota++;	
+			}else{				
+				indiceGanador=i;
+			}			
+			
+			
+		}
+    	// quiere decir que solo queda un jugador que no esta en banca rota por lo que termina el juego
+    	if (players.size()-jugadoresEnBancaRota==1){ 
+    		JOptionPane.showMessageDialog (null, "Felicitaciones, "+getPlayer(indiceGanador).getName()+ ", usted ha ganado", "Felicitaciones!!", JOptionPane.INFORMATION_MESSAGE); 
+			setAllButtonEnabled(false); // apago todos los botones para que nada mas se pueda hacer
+			
+		}
+	}
+
+	public void btnEndTurnClicked() {
 		setAllButtonEnabled(false);
 		getCurrentPlayer().getPosition().playAction();
+		updateGUI();
 		if(getCurrentPlayer().isBankrupt()) {
-			gui.setBuyHouseEnabled(false);
+			//esto no lo hago ya que antes de apagar todo y trancar la partida pregunto si termina la partida, si no termina sigo
+			
+			/*gui.setBuyHouseEnabled(false);
 			gui.setDrawCardEnabled(false);
 			gui.setEndTurnEnabled(false);
 			gui.setGetOutOfJailEnabled(false);
 			gui.setPurchasePropertyEnabled(false);
 			gui.setRollDiceEnabled(false);
-			gui.setTradeEnabled(getCurrentPlayerIndex(),false);
-			updateGUI();
+			gui.setTradeEnabled(getCurrentPlayerIndex(),false);*/
+			verificarFin();				
 		}
 		else {
 			switchTurn();
@@ -111,18 +136,23 @@ public int solicitarNumero(){
     public void btnGetOutOfJailClicked() {
 		getCurrentPlayer().getOutOfJail();
 		if(getCurrentPlayer().isBankrupt()) {
-			gui.setBuyHouseEnabled(false);
+			//en lugar de apagar todo de una primero tengo que buscar si hay un ganador, si no lo hay sigo
+			
+			verificarFin();
+			
+			/*gui.setBuyHouseEnabled(false);
 			gui.setDrawCardEnabled(false);
 			gui.setEndTurnEnabled(false);
 			gui.setGetOutOfJailEnabled(false);
 			gui.setPurchasePropertyEnabled(false);
 			gui.setRollDiceEnabled(false);
-			gui.setTradeEnabled(getCurrentPlayerIndex(),false);
+			gui.setTradeEnabled(getCurrentPlayerIndex(),false);*/
 		}
 		else {
 			gui.setRollDiceEnabled(true);
 			gui.setBuyHouseEnabled(getCurrentPlayer().canBuyHouse());
 			gui.setGetOutOfJailEnabled(getCurrentPlayer().isInJail());
+		
 		}
     }
 
@@ -341,13 +371,24 @@ public int solicitarNumero(){
 
 	public void switchTurn() {
 		turn = (turn + 1) % getNumberOfPlayers();
+		//al cambiar de turno pregunto si el jugador que le toca esta en banca rota
+		//si lo esta verifico si hay ganador y si no lo hay me tengo que saltear ese jugador porque esta en banca rota por lo tanto llamo a switchturn de nuevo
+		//si no lo esta pregunto si esta en carcel y si no lo está (ya pago su fianza) lo retiro
+		if(getCurrentPlayer().isBankrupt()){
+			verificarFin();
+			switchTurn();
+			// si no se termina la partida entonces tengo que pasar de turno volviendo a llamar a switchturn()
+		}else{
+					
+		
 		if(!getCurrentPlayer().isInJail()) {
 			gui.enablePlayerTurn(turn);
 			gui.setBuyHouseEnabled(getCurrentPlayer().canBuyHouse());
             gui.setTradeEnabled(turn, true);
 		}
-		else {
-			gui.setGetOutOfJailEnabled(false);
+		else {// si no está en la carcel entonces setOutOfJailEnabled debe ir en true
+			gui.setGetOutOfJailEnabled(true);
+		}
 		}
 	}
 	
