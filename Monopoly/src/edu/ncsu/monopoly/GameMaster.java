@@ -107,6 +107,14 @@ public int solicitarNumero(){
     	if (players.size()-jugadoresEnBancaRota==1){ 
     		JOptionPane.showMessageDialog (null, "Felicitaciones, "+getPlayer(indiceGanador).getName()+ ", usted ha ganado", "Felicitaciones!!", JOptionPane.INFORMATION_MESSAGE); 
 			setAllButtonEnabled(false); // apago todos los botones para que nada mas se pueda hacer
+			//aumento en 1 las partidas ganadas y persisto
+			try{
+			Perfil p=new Perfil();
+			p.setNombreDeUsuario(getPlayer(indiceGanador).getName());
+			int partgan=ManejadorComienzoPartida.instance().getListaDePerfilesPersistidos().get(ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().indexOf(p)).getPartidosGanados();
+			ManejadorComienzoPartida.instance().getListaDePerfilesPersistidos().get(ManejadorComienzoPartida.instance().getListaDePerfilesSeleccionados().indexOf(p)).setPartidosGanados(partgan+1);
+			Serializar.instance().guardar();
+			}catch(Exception ex){}
 			
 		}
 	}
