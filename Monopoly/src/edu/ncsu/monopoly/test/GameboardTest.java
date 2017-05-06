@@ -63,4 +63,6 @@ public class GameboardTest extends TestCase {
 		assertEquals(0,gameBoard.queryCellIndex("Go"));
 		assertEquals(1,gameBoard.queryCellIndex("TempCell"));
 	}
+	
+	
 }

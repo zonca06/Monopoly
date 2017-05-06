@@ -8,7 +8,7 @@ import edu.ncsu.monopoly.MoneyCard;
 import edu.ncsu.monopoly.test.boardScenarios.GameBoardCCGainMoney;
 import junit.framework.TestCase;
 
-public class RestMoneyCardTest extends TestCase {
+public class LoseMoneyCardTest extends TestCase {
     Card gainMoneyCard;
     GameMaster gameMaster;
 
