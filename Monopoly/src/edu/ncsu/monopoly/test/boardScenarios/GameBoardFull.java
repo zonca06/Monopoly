@@ -256,7 +256,7 @@ public class GameBoardFull extends GameBoard {
         addCell(db3);
         
         // comento esto para probar la carta taxi, al comentarlo solo sale la carta taxi
-        
+        //así es el estado original!!
         
         addCard(new TaxiCard(0, Card.TYPE_CHANCE));
         addCard(new TaxiCard(0, Card.TYPE_CC));
